@@ -13,7 +13,7 @@ interface SearchPanelProps {
     name: string
     personId: string
   }
-  setParam: (param: SearchPanelProps["param"]) => void
+  setParam: (param: SearchPanelProps["param"]) => void// 里面就是说param参数是{name: stringpersonId: string}类型的，然后返回空
 }
 export const SearchPanel = ({ users, param, setParam }: SearchPanelProps) => {
   return <form>
