@@ -1,10 +1,21 @@
 import React, {  useState, ReactNode } from 'react'
-import * as auth from '../../auth-provider'
-import { User } from '../project-list/search-panel'
-
+import * as auth from '../auth-provider'
+import { User } from 'screens/project-list/search-panel'
+import { http } from 'utils/http'
+import { useMount } from 'utils'
 interface AuthForm {
   username: string
   password: string
+}
+
+const bootstrapUser = async () => {
+  let user = null
+  const token = auth.getToken()
+  if (token) {
+    const data = await http('me', { token })
+    user = data.user
+  }
+  return user
 }
 
 const AuthContext = React.createContext<
@@ -25,7 +36,13 @@ export const AuthProvider = ({ children }: {children: ReactNode}) => {
   const register = (form: AuthForm) => auth.register(form).then((user)=>setUser(user))
   const logout = () => auth.logout().then(() => setUser(null))
 
+  useMount(() => { 
+    bootstrapUser().then(setUser)
+  })
+  
   return (
+    // children就相当于他的子组件， 相当于父子组件的传递
+    // 这里App就是children
     <AuthContext.Provider
       children={children}
       value={{ user, login, register, logout }} />

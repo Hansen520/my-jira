@@ -4,19 +4,19 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { loadDevTools } from 'jira-dev-tool'
-import {AppProvider} from './screens/context'
+import {AppProvider} from './context'
 
 loadDevTools(() => {
   ReactDOM.render(
     <React.StrictMode>
       <AppProvider>
+        {/* App代表了有所有的鉴权 */}
         <App />
       </AppProvider>
     </React.StrictMode>,
     document.getElementById('root')
   )
 }
-  
 )
 
 

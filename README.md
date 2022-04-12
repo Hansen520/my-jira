@@ -83,3 +83,218 @@ export const useDebounce = (value, delay) => {
 
 ### JWT原理与auth-provider实现
 
+```javascript
+const localStorageKey = '__auth_provider_token__';
+const apiUrl = process.env.REACT_APP_API_URL;
+export const getToken = () => window.localStorage.getItem(localStorageKey);
+
+export const handleUserResponse = ({ user }: { user: User }) => {
+  window.localStorage.setItem(localStorageKey, user.token || '');
+  return user;
+};
+```
+
+### 用fetch抽离通用HTTP请求方法，增强通用性
+
+### TS的联合类型、Partial和Omit介绍
+
+#### Type
+
+```javascript
+let myFavoriteNumber: string | number;
+myFavoriteNumber = 'seven';
+myFavoriteNumber = 7;
+```
+
+#### interface与type可互换原则
+
+```javascript
+interface Person {
+  name: string
+}
+type Person = { name: string };
+const xiaodong: Person = { name: 'xiaodong' };
+```
+
+#### interface无法替代type的情况
+
+**例子1**
+
+```typescript
+
+type favoriteNumber = string | number;
+let roseFavoriteNumber: favoriteNumber = '6';
+// 例子二
+// interface 也没法实现Utility type
+```
+
+**例子n**看接下来的介绍
+
+#### Parial
+
+`语法：Partial< Type >`
+
+构造一个所有属性的Type设置为optional的类型
+
+简单来说：把 **传入类型Type** 的 **key** 变为 **可选的**
+
+```typescript
+type Person = {
+    name: string,
+    age: number
+}
+
+// 需求：Person的属性可传可不传
+let xiaoming: Partial<Person> = {}
+
+// 实现原理：传入一个对象，使用keyof遍历该对象的所有key，将key变为可选的
+type Partial<T> = {
+    [P in keyof T]?: T[P]
+}
+
+```
+
+#### Required
+
+`语法：Required< Type >`
+
+构造一个所有属性的Type设置为Required的类型
+
+简单来说：把 **传入类型Type** 的 **key** 变为 **必需的**
+
+```javascript
+type Person = {
+    name?: string, //可选
+    age?: number,  //可选
+}
+
+let xiaoming: Required<Person> = { name: 'tao', age: 18 }  //必须要写
+
+实现：
+type Required<T> = {
+    [P in keyof T]-?: T[P];
+}
+
+```
+
+#### Readonly
+
+`语法：Readonly< Type >`
+
+构造一个所有属性的Type设置为onlyRead的类型
+
+简单来说：把 **传入类型Type** 的 **key** 变为 **只读的**
+
+```typescript
+type Person = {
+    name: string,
+    age: number,
+}
+
+let xiaoming: Readonly<Person> = { name: 'tao', age: 18 }
+xiaoming.age = 20   //赋值报错
+
+// 实现：
+type Readonly<T> = {
+    readonly [P in keyof T]: T[P];
+};
+```
+
+#### Pick
+
+`语法：Pick<Type, Keys>`
+
+通过Keys从中选择一组属性来构造类型Type
+
+简单来说：从 **传入类型Type** 中把 **Keys** 提取出来
+
+```typescript
+type Person = {
+  name: string;
+  age: number;
+};
+
+type PersonOnlyName = Pick<Person, 'name'>;
+
+let gg: PersonOnlyName = {
+  name: 'Hansen',
+};
+
+// 实现：
+type Pick<T, K extends keyof T> = {
+    [P in K]: T[P]
+}
+```
+
+#### Exclude
+
+`语法：Exclude<Type, ExcludedUnion>`
+
+通过从Type可分配给的所有联合成员中排除来构造类型ExcludedUnion
+
+简单来说：删除不要的属性，从 **Type** 中 **删除ExcludedUnion** 的属性，其他提取出来，如果Type中没有，就全部提取出来
+
+```javascript
+type Person = {
+    name: string,
+    age: number,
+    sex: string,
+}
+
+type PersonKeys = keyof Person   //PersonKeys: 'name' | 'age'
+type Age = Exclude<PersonKeys, 'name' | 'sex'>  //'age'
+type All = Exclude<PersonKeys, 'xxx'>  //'name' | 'age' | 'sex'
+type All2 = Exclude<PersonKeys, 'xxx' | 'age'>  //'name' | 'sex'
+
+// 实现：
+type Exclude<T, U> = T extends U ? never : T;
+```
+
+#### Omit
+
+`语法：Omit<Type, Keys>`
+
+通过从中选择所有属性Type然后删除Keys来构造类型
+
+简单来说：删除不要的属性
+
+```javascript
+type Person = {
+    name: string,
+    age: number,
+    gender: string,
+}
+
+// 需求：只要Person的某个属性，删除不要的属性，不修改原有Person
+let xiaoming: Omit<Person, 'name' | 'age'> = { gender: '男' }
+
+// Omit的实现：
+type Omit<T, K extends keyof any> = Pick<T, Exclude<keyof T, K>>
+```
+
+相关资料
+
+https://blog.csdn.net/weixin_44828005/article/details/120953059
+
+https://blog.csdn.net/weixin_44828005/article/details/119720185
+
+### ant组件库的安装
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
