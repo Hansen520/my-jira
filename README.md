@@ -280,9 +280,13 @@ https://blog.csdn.net/weixin_44828005/article/details/119720185
 
 ### ant组件库的安装
 
+`yarn add antd`
 
+因为antd要使用less，所以要配合craco去覆盖wepack的配置
 
+命令: `yarn add @craco/craco` 和 `craco-less`
 
+具体文章: https://ant.design/docs/react/use-with-create-react-app-cn
 
 
 
