@@ -288,9 +288,21 @@ https://blog.csdn.net/weixin_44828005/article/details/119720185
 
 具体文章: https://ant.design/docs/react/use-with-create-react-app-cn
 
+### CSS-in-JS
 
+可以安装下列指令，带你走进CSS-in-JS的世界
 
+`yarn add @emotion/react @emotion/styled`
 
+vs-code 可以安装vscode-styled-component，让样式高亮显示
+
+### grid 和flex布局的优缺点
+
+grid 和flex各自的应用场景：
+
+ 1：考虑： 一维布局(只有横向布局或则只有纵向布局)还是二维布局（既有横向布局又有纵向布局）。一般来说： 一维布局使用flex, 二维布局使用grid 
+
+2：从内容出发：数据内容一般不固定，希望内容均匀的填充在容器中， 由内容自己的大小决定占据的空间大小。 从布局出发：先规划网格（数据一般比较固定），然后再把元素往里填充。 从内容出发：一般使用flex；从布局出发一般使用grid       
 
 
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Input, Select } from 'antd'
+import { Form, Input, Select } from 'antd'
 
 export interface User {
   id: string
@@ -18,8 +18,8 @@ interface SearchPanelProps {
   setParam: (param: SearchPanelProps["param"]) => void// 里面就是说param参数是{name: stringpersonId: string}类型的，然后返回空
 }
 export const SearchPanel = ({ users, param, setParam }: SearchPanelProps) => {
-  return (<form>
-    <div>
+  return (<Form>
+    <Form.Item>
       <Input
         type="text"
         value={param.name}
@@ -29,7 +29,8 @@ export const SearchPanel = ({ users, param, setParam }: SearchPanelProps) => {
             name: evt.target.value
           })
         } />
-    
+    </Form.Item>
+    <Form.Item>
       <Select
         value={param.personId}
         onChange={
@@ -44,6 +45,6 @@ export const SearchPanel = ({ users, param, setParam }: SearchPanelProps) => {
             {user.name}
           </Select.Option>)}
       </Select>
-    </div>
-  </form>)
+    </Form.Item>
+  </Form>)
 }
