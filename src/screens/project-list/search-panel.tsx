@@ -1,4 +1,7 @@
+/** @jsx jsx */
 import React from 'react'
+
+import { jsx, css } from '@emotion/react'
 import { Form, Input, Select } from 'antd'
 
 export interface User {
@@ -18,9 +21,10 @@ interface SearchPanelProps {
   setParam: (param: SearchPanelProps["param"]) => void// 里面就是说param参数是{name: stringpersonId: string}类型的，然后返回空
 }
 export const SearchPanel = ({ users, param, setParam }: SearchPanelProps) => {
-  return (<Form>
+  return (<Form css={{ marginBottom: "2rem" }} layout={"inline"}>
     <Form.Item>
       <Input
+        placeholder={"项目名"}
         type="text"
         value={param.name}
         onChange={

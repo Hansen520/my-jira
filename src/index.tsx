@@ -2,16 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { loadDevTools } from 'jira-dev-tool'
+import { DevTools, loadServer } from 'jira-dev-tool'
 // 务必在jira-dev-tool后面引入
 import "antd/dist/antd.less";
 import {AppProvider} from './context'
 
-loadDevTools(() => {
+loadServer(() => {
   ReactDOM.render(
     <React.StrictMode>
       <AppProvider>
         {/* App代表了有所有的鉴权 */}
+        <DevTools />
         <App />
       </AppProvider>
     </React.StrictMode>,
